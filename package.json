@@ -1,0 +1,42 @@
+{
+  "name": "react-browserify-mocha-rig",
+  "version": "0.0.1",
+  "description": "react-browserify-mocha-rig",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test-node && npm run test-phantom && npm run test-wd",
+    "test-node": "./node_modules/mochify/bin/cmd.js --reporter spec --node --transform [ reactify ] --transform [ brfs ] --grep-invert '#dom' ./node_modules/app/**/*Spec.js",
+    "test-phantom": "./node_modules/mochify/bin/cmd.js --transform [ reactify ] --transform [ brfs ]  ./node_modules/app/**/*Spec.js",
+    "test-wd": "./node_modules/mochify/bin/cmd.js --transform [ reactify ] --transform [ brfs ] --wd ./node_modules/app/**/*Spec.js",
+    "test-dev": "./node_modules/mochify/bin/cmd.js --debug --transform [ reactify ] --transform [ brfs ] ./node_modules/app/**/*Spec.js",
+    "build-vendor": "./node_modules/browserify/bin/cmd.js -r react -r domready -r lodash -r shifty -g uglifyify -o public/vendor.js",
+    "build-app": "./node_modules/browserify/bin/cmd.js -t reactify -g uglifyify -x react -x react -x domready -x lodash -x shifty -t reactify -t brfs ./node_modules/app/index.js -o public/app.js",
+    "build": "npm run build-app && npm run build-vendor",
+    "dev": "npm run build-vendor && ./node_modules/watchify/bin/cmd.js -x react -x domready -x lodash -x shifty -t reactify -t brfs ./node_modules/app/index.js -o public/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dannydavidson/react-browserify-mocha-rig.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dannydavidson/react-browserify-mocha-rig/issues"
+  },
+  "homepage": "https://github.com/dannydavidson/react-browserify-mocha-rig",
+  "devDependencies": {
+    "brfs": "^1.2.0",
+    "browserify": "^6.1.0",
+    "mochify": "^1.5.0",
+    "reactify": "^0.14.0",
+    "sinon": "^1.10.3",
+    "uglifyify": "^2.5.0",
+    "watchify": "^2.0.0"
+  },
+  "dependencies": {
+    "domready": "^1.0.7",
+    "lodash": "^2.4.1",
+    "react": "^0.11.2",
+    "shifty": "^1.3.2"
+  }
+}
